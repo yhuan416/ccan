@@ -11,7 +11,11 @@ add_subdirectory(tools/configurator)
 add_subdirectory(ccan/compiler)
 add_subdirectory(ccan/build_assert)
 add_subdirectory(ccan/version)
+add_subdirectory(ccan/typesafe_cb)
+add_subdirectory(ccan/ptrint)
 add_subdirectory(ccan/htable)
+add_subdirectory(ccan/order)
+add_subdirectory(ccan/avl)
 
 # ccan
 file(GLOB SOURCES "ccan/*/*.c")

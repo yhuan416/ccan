@@ -4,7 +4,14 @@ project(ccan)
 
 include(config.cmake)
 
+# tools/configurator
 add_subdirectory(tools/configurator)
+
+# ccan
+add_subdirectory(ccan/compiler)
+add_subdirectory(ccan/build_assert)
+add_subdirectory(ccan/version)
+add_subdirectory(ccan/htable)
 
 # ccan
 file(GLOB SOURCES "ccan/*/*.c")
@@ -19,8 +26,11 @@ list(FILTER SOURCES EXCLUDE REGEX ".*ogg_to_pcm.*")
 list(FILTER SOURCES EXCLUDE REGEX ".*tal/talloc.*")
 list(FILTER SOURCES EXCLUDE REGEX ".*wwviaudio.*")
 
+list(FILTER SOURCES EXCLUDE REGEX ".*compiler.*")
+list(FILTER SOURCES EXCLUDE REGEX ".*htable.*")
+
 add_library(ccan STATIC ${SOURCES})
-add_dependencies(ccan ccan_config)
+add_dependencies(ccan ccan_config_h)
 
 target_include_directories(ccan PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 

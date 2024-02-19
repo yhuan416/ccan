@@ -2,21 +2,9 @@ cmake_minimum_required(VERSION 3.5)
 
 project(ccan)
 
-set(WARN_CFLAGS -Wall -Wstrict-prototypes -Wold-style-definition -Wundef -Wmissing-prototypes -Wmissing-declarations -Wpointer-arith -Wwrite-strings -Wshadow=local)
-set(CCAN_CFLAGS -g3 -ggdb ${WARN_CFLAGS} -DCCAN_STR_DEBUG=1)
+include(config.cmake)
 
-# configurator tool, output to tools/configurator
-add_executable(configurator tools/configurator/configurator.c)
-set_target_properties(configurator PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/tools/configurator
-)
-
-# config.h
-add_custom_target(config
-    COMMAND configurator cc ${CCAN_CFLAGS} > ${CMAKE_CURRENT_SOURCE_DIR}/config.h
-    DEPENDS configurator
-    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/tools/configurator
-)
+add_subdirectory(tools/configurator)
 
 # ccan
 file(GLOB SOURCES "ccan/*/*.c")
@@ -32,7 +20,7 @@ list(FILTER SOURCES EXCLUDE REGEX ".*tal/talloc.*")
 list(FILTER SOURCES EXCLUDE REGEX ".*wwviaudio.*")
 
 add_library(ccan STATIC ${SOURCES})
-add_dependencies(ccan config)
+add_dependencies(ccan ccan_config)
 
 target_include_directories(ccan PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 

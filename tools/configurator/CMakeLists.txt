@@ -15,7 +15,7 @@ set_target_properties(configurator PROPERTIES
 )
 
 # config.h
-add_custom_target(ccan_config_h
+add_custom_target(gen_config_h
     COMMAND configurator cc ${CCAN_CFLAGS} > ${ccan_base_path}/config.h.tmp && mv ${ccan_base_path}/config.h.tmp ${ccan_base_path}/config.h
     DEPENDS configurator
     WORKING_DIRECTORY ${target_path}
